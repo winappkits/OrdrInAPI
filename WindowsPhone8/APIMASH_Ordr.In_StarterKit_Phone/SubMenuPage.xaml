@@ -1,0 +1,76 @@
+﻿<phone:PhoneApplicationPage
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="clr-namespace:Microsoft.Phone.Maps.Controls;assembly=Microsoft.Phone.Maps"
+    xmlns:maptk="clr-namespace:Microsoft.Phone.Maps.Toolkit;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:local="clr-namespace:APIMASH_Ordr.In_StarterKit_Phone"
+    x:Class="APIMASH_Ordr.In_StarterKit_Phone.SubMenuPage"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="Transparent"    
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d">
+    <phone:PhoneApplicationPage.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <local:IntToTrayCountConverter x:Key="IntToTrayCountConverter" />
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,17,0,0">
+            <TextBlock Text="{Binding TrayCount, Converter={StaticResource IntToTrayCountConverter}}" Margin="0,0,30,0" Style="{StaticResource CountStyle}" Tap="TextBlock_Tap" />
+            <StackPanel Margin="0,5,10,0">
+                <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="5" Width="440"  />
+                <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="5" Width="440" Margin="0,5,0,0" />
+            </StackPanel>
+            <!--<Image Source="Assets/bluelogo.png" Height="60" />-->
+            <!--<TextBlock Text="{StaticResource AppName}" Style="{StaticResource SubPageHeaderStyle}"/>-->
+            <TextBlock Text="{Binding CurrentRestaurant.NameUpper}" Margin="9,10,0,0" Style="{StaticResource RestaurantNameStyle}"/>
+            <TextBlock Text="{Binding CurrentMenuItem.NameLower}" Margin="9,0,0,10" Style="{StaticResource SubItemTextStyle}"/>
+        </StackPanel>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <!--<StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{Binding CurrentRestaurant.Name}" Style="{StaticResource SubPageHeaderStyle}"/>
+            <TextBlock Text="{Binding CurrentMenuItem.Name}" Margin="9,-7,0,0" Style="{StaticResource RestaurantNameStyle}"/>
+        </StackPanel>-->
+
+        <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0">
+            <!--<StackPanel Orientation="Horizontal">
+                <StackPanel Margin="-12,5,10,0">
+                    <Border Background="{StaticResource LightRedColor}" Height="10" Width="240" />
+                    <Border Background="{StaticResource DarkRedColor}" Height="10" Width="240" Margin="0,5,0,0" />
+                </StackPanel>
+                <TextBlock Text="{Binding TrayCount, Converter={StaticResource IntToTrayCountConverter}}" Style="{StaticResource CountStyle}" Tap="TextBlock_Tap" />
+            </StackPanel>-->
+            <ListBox x:Name="MenuList" ItemsSource="{Binding CurrentMenuItem.Children}" SelectionChanged="MenuList_SelectionChanged" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Margin="9,2,0,24">
+                            <!--Replace rectangle with image-->
+                            <Grid Width="470" Margin="0,-7,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" Style="{StaticResource CategoryListStyle}"/>
+                                <TextBlock Text="{Binding Price}" VerticalAlignment="Center" Grid.Column="1" Visibility="{Binding IsOrderable,Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource OrderListPriceStyle}" />
+                            </Grid>
+                            <TextBlock Text="{Binding Description}" VerticalAlignment="Center" Style="{StaticResource DescriptionStyle}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </Grid>
+
+</phone:PhoneApplicationPage>

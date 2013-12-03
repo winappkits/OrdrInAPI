@@ -1,0 +1,85 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="APIMASH_Ordr.In_StarterKit_Phone.YourCardsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:water="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl"
+    xmlns:local="clr-namespace:APIMASH_Ordr.In_StarterKit_Phone"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d">
+
+    <phone:PhoneApplicationPage.Resources>
+        <local:SelectedBackgroundConverter x:Key="SelectedBackgroundConverter" />
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </phone:PhoneApplicationPage.Resources>
+
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,17,0,28">
+            <TextBlock Text=" " Margin="0,0,30,0" Style="{StaticResource CountStyle}" />
+            <StackPanel Margin="0,5,10,0">
+                <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="5" Width="440"  />
+                <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="5" Width="440" Margin="0,5,0,0" />
+            </StackPanel>
+            <!--<Image Source="Assets/bluelogo.png" Height="60" />-->
+            <!--<TextBlock Text="{StaticResource AppName}" Style="{StaticResource SubPageHeaderStyle}"/>-->
+            <TextBlock Text="MY ACCOUNT" Margin="9,10,0,0" Style="{StaticResource RestaurantNameStyle}"/>
+            <TextBlock Text="credit cards" Margin="9,0,0,10" Style="{StaticResource SubItemTextStyle}"/>
+        </StackPanel>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <!--<StackPanel Grid.Row="0" Margin="12,17,12,28">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="YOUR CARDS" Style="{StaticResource SubPageHeaderStyle}"/>
+            </Grid>
+            <StackPanel Margin="-12,5,10,0">
+                <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="10" Width="440"  />
+                <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="10" Width="440" Margin="0,5,0,0" />
+            </StackPanel>
+        </StackPanel>-->
+
+        <ListBox x:Name="cardList" Margin="12,1,12,-1" Grid.Row="1" ItemsSource="{Binding Cards}" SelectionChanged="cardList_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="12,2,0,4" Width="432" Background="{Binding IsSelected, Converter={StaticResource SelectedBackgroundConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Width="410" Margin="-8,-7,0,30">
+                            <TextBlock Text="{Binding Nick}" TextWrapping="Wrap" Margin="10" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource BrownColor}" FontSize="48" FontFamily="Tahoma Bold" />
+                            <TextBlock Text="{Binding FullLast5}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="{StaticResource BrownColor}" FontFamily="Tahoma" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                        </StackPanel>
+                        <Image Grid.Column="1" VerticalAlignment="Center" Source="Assets/check2.png" Visibility="{Binding IsDefault,Converter={StaticResource BoolToVisibilityConverter}}" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Add.png" x:Name="AddCard" Text="Add" Click="AddCard_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Select.png" x:Name="selectCard" IsEnabled="False" Text="Default" Click="selectCard_Click" />
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Delete.png" x:Name="deleteCard" IsEnabled="False" Text="Delete" Click="deleteCard_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Toolkit.Content/ApplicationBar.Edit.png" x:Name="editCard" IsEnabled="False" Text="Edit" Click="editCard_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+
+</phone:PhoneApplicationPage>

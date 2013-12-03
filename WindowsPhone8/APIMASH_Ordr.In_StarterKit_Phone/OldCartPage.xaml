@@ -1,0 +1,148 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="APIMASH_Ordr.In_StarterKit_Phone.OldCartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:APIMASH_Ordr.In_StarterKit_Phone"
+    xmlns:tk="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d">
+
+    <phone:PhoneApplicationPage.Resources>
+        <local:IntToTrayCountConverter x:Key="IntToTrayCountConverter" />
+        <local:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+        <local:FloatToStringConverter x:Key="FloatToStringConverter" />
+    </phone:PhoneApplicationPage.Resources>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,17,0,0">
+            <!--<TextBlock Text="{Binding TrayCount, Converter={StaticResource IntToTrayCountConverter}}" Margin="0,0,30,0" Style="{StaticResource CountStyle}" /> -->
+            <StackPanel Margin="0,5,10,0">
+                <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="5" Width="440"  />
+                <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="5" Width="440" Margin="0,5,0,0" />
+            </StackPanel>
+            <!--<Image Source="Assets/bluelogo.png" Height="60" />-->
+            <!--<TextBlock Text="{StaticResource AppName}" Style="{StaticResource SubPageHeaderStyle}"/>-->
+            <TextBlock Text="{Binding CurrentOrderHistory.RestaurantName}" Margin="9,10,0,0" Style="{StaticResource RestaurantNameStyle}"/>
+            <!--<TextBlock Text="{Binding CurrentOrderHistory.OrderId}" Margin="9,0,0,10" Style="{StaticResource SubItemTextStyle}"/>-->
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.4*" />
+                <RowDefinition Height="1.5*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <phone:LongListSelector Margin="-10,0,0,0" ItemsSource="{Binding CurrentOrderHistory.TrayItems}">
+                    <phone:LongListSelector.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                    <TextBlock Foreground="{StaticResource LightRedColor}" TextAlignment="Center" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Center" FontSize="24" Text="{Binding Quantity}" />
+                                    <!--<tk:ListPicker ExpansionMode="FullScreenOnly" Background="{StaticResource LightRedColor}" Width="60" Height="60" ItemsSource="{Binding QuantityList}" DisplayMemberPath="Display" FullModeHeader="{Binding Name}" FullModeItemTemplate="{StaticResource PickerItemTemplate}" SelectionChanged="ListPicker_SelectionChanged" />-->
+                                </StackPanel>
+                                    <!--<Border Grid.Column="0" Background="{StaticResource LightRedColor}" Width="60" Height="60">
+                                    <TextBlock Text="{Binding Quantity}" FontSize="{StaticResource ConfirmFontSize}" HorizontalAlignment="Center" Foreground="{StaticResource WhiteColor}" VerticalAlignment="Center"/>
+                                </Border>-->
+                                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" Margin="10" Style="{StaticResource ConfirmStyle}"  />
+                                    <ListBox ItemsSource="{Binding Options}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource OptionStyle}" />
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="{Binding Price}" VerticalAlignment="Center" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource ConfirmDataStyle}" />
+                                <!--<TextBlock Text="{Binding Quantity}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PlacesListStyle}" />-->
+                            </Grid>
+                        </DataTemplate>
+                    </phone:LongListSelector.ItemTemplate>
+                </phone:LongListSelector>
+            </Grid>
+            <!--<Grid Grid.Row="1">-->
+                <!--<StackPanel Margin="-12,-10,10,0">
+                    <Border Background="{StaticResource DarkRedColor}" Height="10" HorizontalAlignment="Left" Width="440" />
+                    <Border Background="{StaticResource LightRedColor}" Height="10" HorizontalAlignment="Left" Width="400" Margin="0,5,0,0" />
+                </StackPanel>-->
+                <StackPanel Grid.Row="1" Margin="10">
+                    <Border Margin="-12,-10,10,0" Background="{StaticResource BrownColor}" Height="3" Width="450" HorizontalAlignment="Left" />
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Subtotal:" Style="{StaticResource ConfirmStyle}" HorizontalAlignment="Right" />
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentOrderHistory.SubTotal}" Style="{StaticResource ConfirmDataStyle}" />
+                    </Grid>
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Sales Tax:" Style="{StaticResource ConfirmStyle}"  HorizontalAlignment="Right" />
+                    <TextBlock Grid.Column="1" Text="{Binding CurrentOrderHistory.Tax}" Style="{StaticResource ConfirmDataStyle}" />
+                    </Grid>
+                    <Grid Margin="0,15,0,0" x:Name="deliveryGrid" Visibility="{Binding CurrentOrderHistory.Fee, Converter={StaticResource StringToVisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Delivery Fee:" Style="{StaticResource ConfirmStyle}"  HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="1" Text="{Binding CurrentOrderHistory.Fee}" Style="{StaticResource ConfirmDataStyle}"  HorizontalAlignment="Right"/>
+                    </Grid>
+                    <Grid Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Tip:" Style="{StaticResource ConfirmStyle}"  HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="1" Text="{Binding CurrentOrderHistory.Tip}" Style="{StaticResource ConfirmDataStyle}" />
+                    </Grid>
+                </StackPanel>
+            <!--</Grid>-->
+            <StackPanel Grid.Row="2">
+                <Border Background="{StaticResource BrownColor}" Margin="-12,5,10,10" Height="3" Width="450" HorizontalAlignment="Left" />
+                <!--<StackPanel Margin="-12,5,10,10">
+                    <Border Background="{StaticResource BrownColor}" HorizontalAlignment="Left" Height="10" Width="440"  />
+                </StackPanel>-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Right" Grid.Column="0" Text="Grand Total:" Style="{StaticResource PaymentTotalStyle}" />
+                    <TextBlock HorizontalAlignment="Right" Grid.Column="1" Text="{Binding CurrentOrderHistory.Total}" Style="{StaticResource PaymentStyle}" />
+                </Grid>
+                <!--<StackPanel Margin="0,5,10,0">
+                    <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="10" Width="480"  />
+                    <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="10" Width="400" Margin="0,5,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="GO TO PAY" Style="{StaticResource ToggleButtonStyleWide}" HorizontalAlignment="Stretch" Click="Button_Click" />
+
+                </StackPanel>-->
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

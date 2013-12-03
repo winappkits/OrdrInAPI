@@ -1,0 +1,103 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="APIMASH_Ordr.In_StarterKit_Phone.PaymentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:water="clr-namespace:System.Windows.Controls;assembly=WindowsPhoneWatermarkTextBoxControl"
+    xmlns:local="clr-namespace:APIMASH_Ordr.In_StarterKit_Phone"
+    xmlns:tk="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d">
+
+    <phone:PhoneApplicationPage.Resources>
+        <local:IntToTrayCountConverter x:Key="IntToTrayCountConverter" />
+        <local:FloatToStringConverter x:Key="FloatToStringConverter" />
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,17,0,28">
+            <TextBlock Text="{Binding TrayCount, Converter={StaticResource IntToTrayCountConverter}}" Margin="0,0,30,0" Style="{StaticResource CountStyle}" />
+            <StackPanel Margin="0,5,10,0">
+                <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="5" Width="440"  />
+                <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="5" Width="440" Margin="0,5,0,0" />
+            </StackPanel>
+            <!--<Image Source="Assets/bluelogo.png" Height="60" />-->
+            <!--<TextBlock Text="{StaticResource AppName}" Style="{StaticResource SubPageHeaderStyle}"/>-->
+            <TextBlock Text="{Binding RestaurantCheckout}" Margin="9,10,0,0" Style="{StaticResource RestaurantNameStyle}"/>
+            <TextBlock Text="payment" Margin="9,0,0,10" Style="{StaticResource SubItemTextStyle}"/>
+        </StackPanel>
+        <!--<!- -TitlePanel contains the name of the application and page title- ->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="{Binding CurrentRestaurant.Name}" Style="{StaticResource SubPageHeaderStyle}"/>
+            <StackPanel Margin="-12,5,10,0">
+                <Border Background="{StaticResource LightRedColor}" HorizontalAlignment="Left" Height="10" Width="440"  />
+                <Border Background="{StaticResource DarkRedColor}" HorizontalAlignment="Left" Height="10" Width="440" Margin="0,5,0,0" />
+            </StackPanel>
+        </StackPanel>-->
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.8* "/>
+                <RowDefinition Height="1* "/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="choose method" />
+            <StackPanel Grid.Row="0" Margin="10,0,10,0">
+                <TextBlock Text="Please provide your credit card information:" Style="{StaticResource DescriptionStyle}" />
+                <water:WatermarkTextBox WatermarkTextStyle="{StaticResource WaterMarkStyle}" BorderBrush="{StaticResource GrayColor}" BorderThickness="3" x:Name="CreditCardNumber" WatermarkText="Credit Card Number" Margin="0,10,0,10" Text="{Binding CurrentCard.FullLast5, Mode=TwoWay}" InputScope="Number" GotFocus="CreditCardNumber_GotFocus" LostFocus="CreditCardNumber_LostFocus" KeyUp="CreditCardNumber_KeyUp" Height="80" />
+                <!--<water:WatermarkTextBox x:Name="ExpireDate" WatermarkText="Expiration Date (ie. 10/2016)" Margin="0,10,0,10" Text="{Binding CurrentCard.Expire, Mode=TwoWay}"/>-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <tk:ListPicker Grid.Column="0" x:Name="expireMonth" ExpansionMode="FullScreenOnly" Background="{StaticResource WhiteColor}" BorderBrush="{StaticResource GrayColor}" BorderThickness="3" Height="60" ItemsSource="{Binding MonthList}" DisplayMemberPath="Display" FullModeHeader="Expiration Month" Foreground="{StaticResource GrayColor}" FullModeItemTemplate="{StaticResource PickerCardItemTemplate}" />
+                    <tk:ListPicker Grid.Column="1" x:Name="expireYear"  ExpansionMode="FullScreenOnly" Background="{StaticResource WhiteColor}" Height="60" ItemsSource="{Binding YearList}" BorderBrush="{StaticResource GrayColor}" BorderThickness="3" DisplayMemberPath="Display" FullModeHeader="Expiration Year" Foreground="{StaticResource GrayColor}" FullModeItemTemplate="{StaticResource PickerCardItemTemplate}"  />
+                </Grid>
+                <!--<tk:DatePicker />-->
+                <Grid Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <water:WatermarkTextBox WatermarkTextStyle="{StaticResource WaterMarkStyle}" BorderBrush="{StaticResource GrayColor}" BorderThickness="3" Grid.Column="0" x:Name="SecurityCode" WatermarkText="CCV" Text="{Binding CurrentCard.Security, Mode=TwoWay}" InputScope="Number"  KeyUp="CreditCardNumber_KeyUp" Height="80" />
+                    <water:WatermarkTextBox WatermarkTextStyle="{StaticResource WaterMarkStyle}" BorderBrush="{StaticResource GrayColor}" BorderThickness="3" Grid.Column="1" x:Name="ZipCode" WatermarkText="Zip Code" Text="{Binding CurrentCard.Zip, Mode=TwoWay}" InputScope="Number" KeyUp="CreditCardNumber_KeyUp" Visibility="Collapsed" />
+                </Grid>
+                <!--<CheckBox x:Name="UseDeliveryAddress" Content="Use Delivery Address" Background="{StaticResource BeigeColor}" BorderBrush="{StaticResource BrownColor}" Foreground="{StaticResource BrownColor}" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" IsChecked="true" />-->
+                <Button x:Name="ccAddress" Content="Billing Address" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Center" IsEnabled="True" Click="ccAddress_Click" />
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <Border Margin="-12,5,10,10" Background="{StaticResource BrownColor}" Height="3" Width="450" HorizontalAlignment="Left" />
+                <!--<StackPanel Margin="-12,5,10,10">
+                    <Border Background="{StaticResource BrownColor}" HorizontalAlignment="Left" Height="10" Width="440"  />
+                </StackPanel>-->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock HorizontalAlignment="Right" Grid.Column="0" Text="Grand total" Style="{StaticResource PaymentTotalStyle}" />
+                    <TextBlock HorizontalAlignment="Right" Grid.Column="1" Text="{Binding GrandTotal, Converter={StaticResource FloatToStringConverter}}" Style="{StaticResource PaymentStyle}" />
+                </Grid>
+                <StackPanel>
+                    <Button Content="Next" Style="{StaticResource SecondaryButtonStyle}" HorizontalAlignment="Stretch" Click="Button_Click" Margin="40,0,40,0" />
+                    <ProgressBar x:Name="orderWait" IsIndeterminate="False" />
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>
