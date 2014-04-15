@@ -171,7 +171,7 @@ namespace APIMASH_OrdrInLib
     {
         public string rid { get; set; }
         public int allow_tip { get; set; }
-        public int allow_asap { get; set; }
+        public string allow_asap { get; set; }
         public int can_service { get; set; }
         public string service { get; set; }
         public int delivery { get; set; }
@@ -550,7 +550,7 @@ namespace APIMASH_OrdrInLib
         public Rds_Info rds_info { get; set; }
         public Services services { get; set; }
         public int allow_tip { get; set; }
-        public int allow_asap { get; set; }
+        public string allow_asap { get; set; }
         public string[] cu { get; set; }
         public string addr { get; set; }
         public Full_Addr full_addr { get; set; }
@@ -630,7 +630,7 @@ namespace APIMASH_OrdrInLib
     {
         public string rid { get; set; }
         public int allow_tip { get; set; }
-        public int allow_asap { get; set; }
+        public string allow_asap { get; set; }
         public string tax { get; set; }
         public string fee { get; set; }
         public int[] meals { get; set; }
@@ -648,7 +648,7 @@ namespace APIMASH_OrdrInLib
 
         public void Copy(Fee_Bindable bindable)
         {
-            bindable.AllowASAP = allow_asap == 1;
+            bindable.AllowASAP = allow_asap == "yes";
             bindable.AllowTip = allow_tip == 1;
             bindable.DeliveryTime = del;
             bindable.Error = _err;
@@ -668,7 +668,7 @@ namespace APIMASH_OrdrInLib
     {
         public string rid { get; set; }
         public int allow_tip { get; set; }
-        public int allow_asap { get; set; }
+        public string allow_asap { get; set; }
         public int[] meals { get; set; }
         public int zone_id { get; set; }
         public string provided_id { get; set; }
@@ -684,7 +684,7 @@ namespace APIMASH_OrdrInLib
 
         public void Copy(DeliveryCheck_Bindable bindable)
         {
-            bindable.AllowASAP = allow_asap == 1;
+            bindable.AllowASAP = allow_asap == "yes";
             bindable.AllowTip = allow_tip == 1;
             bindable.DeliveryTime = del;
             bindable.Error = _err;
